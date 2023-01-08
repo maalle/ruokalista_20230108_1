@@ -1,0 +1,9 @@
+body {
+    background-color: steelblue;
+}
+
+div#root {
+    max-width: 800px;
+    margin: auto;
+    background-color: white;
+}
