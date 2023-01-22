@@ -7,6 +7,8 @@ from sqlalchemy import create_engine, text
 app = Flask(import_name = 'Ruokalista', static_url_path = '/')
 app.config['JSON_AS_ASCII'] = False
 engine = create_engine("sqlite+pysqlite:///ruokalista.db", echo=True, future=True)
+with engine.connect() as conn:
+    conn.execute(text("CREATE TABLE IF NOT EXISTS RUOKALISTA(id INTEGER PRIMARY KEY, nimi VARCHAR(100) UNIQUE, hinta DECIMAL(5,2))"))
 
 @app.get("/")
 def index():
