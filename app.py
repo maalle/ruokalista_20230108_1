@@ -1,14 +1,16 @@
 #!/usr/bin/env python3
 
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, abort
 from os import environ
 from sqlalchemy import create_engine, text
+from sqlalchemy.exc import IntegrityError
 
 app = Flask(import_name = 'Ruokalista', static_url_path = '/')
 app.config['JSON_AS_ASCII'] = False
 engine = create_engine("sqlite+pysqlite:///ruokalista.db", echo=True, future=True)
 with engine.connect() as conn:
-    conn.execute(text("CREATE TABLE IF NOT EXISTS RUOKALISTA(id INTEGER PRIMARY KEY, nimi VARCHAR(100) UNIQUE, hinta DECIMAL(5,2))"))
+    conn.execute(text("CREATE TABLE IF NOT EXISTS RUOKALISTA(id INTEGER PRIMARY KEY, \
+    nimi VARCHAR(100) UNIQUE, hinta DECIMAL(5,2))"))
 
 @app.get("/")
 def index():
@@ -27,9 +29,13 @@ def haeRuokalista():
 def lisaaRuokalaji():
     with engine.connect() as conn:
         uusiRuoka = request.get_json()
-        conn.execute(text("INSERT INTO RUOKALISTA(nimi, hinta) VALUES (:nimi, :hinta)"), uusiRuoka)
-        conn.commit()
-        return (uusiRuoka, 201)
+        try:
+            conn.execute(text("INSERT INTO RUOKALISTA(nimi, hinta) \
+            VALUES (:nimi, :hinta)"), uusiRuoka)
+            conn.commit()
+            return (uusiRuoka, 201)
+        except IntegrityError:
+            abort(403)
 
 @app.put("/rs")
 def muokkaaRuokalajia():

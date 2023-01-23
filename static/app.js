@@ -3,6 +3,7 @@
 const TITLE = 'Ruokalista';
 
 let editing = -1;
+let duplicateError = false;
 
 function setEditing(value) {
     editing = value;
@@ -18,7 +19,16 @@ function lisaa(nimi, hinta) {
                 "hinta": hinta
 
             }),
-            method: 'POST'});
+            method: 'POST',
+            error: jqXHR => {
+				if(jqXHR.status >= 400) {
+					duplicateError = true;
+				}
+			},
+			success: () => {
+				duplicateError = false;
+			}
+        });
     }
     setEditing(-1);
     refresh();
@@ -32,9 +42,17 @@ function muokkaa(id, nimi, hinta) {
                 "id": id,
                 "nimi": nimi,
                 "hinta": hinta
-
             }),
-            method: 'PUT'});
+            method: 'PUT',
+            error: jqXHR => {
+				if(jqXHR.status >= 400) {
+					duplicateError = true;
+				}
+			},
+			success: () => {
+				duplicateError = false;
+			}
+       });
     }
     setEditing(-1);
     refresh();
@@ -43,6 +61,7 @@ function muokkaa(id, nimi, hinta) {
 function poista(id) {
     $.ajax(`/rs/${id}`, {method: 'DELETE'});
     setEditing(-1);
+    duplicateError = false;
     refresh();
 }
 
@@ -74,6 +93,12 @@ function refresh() {
                     `</tr>`);
         }
         $('tbody#ruoat').html(html);
+        if (duplicateError) {
+			$('div#varoitus').html(`<div class="w3-panel w3-red"><h3>Varoitus!</h3>` +
+			`<p>Kahta samannimistä ruokalajia ei saa luoda.</p></div>`);
+		} else {
+			$('div#varoitus').html('');
+		}
     });
 }
 
