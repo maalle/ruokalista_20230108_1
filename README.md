@@ -22,3 +22,26 @@ python3 app.py
 deactivate
 rm -rf venv/ ruokalista.db
 ```
+
+## Docker-levykuva
+
+Tee ensin Ubuntuun sopiva Flask-levykuva käskyllä:
+
+```bash
+docker build -t flask-sqlite3 -f Dockerfile_Flask_SQLite3 .
+```
+
+Jos tämä on tehty, niin oman levykuvan tästä sovelluksesta voi tehdä käskyllä:
+
+```bash
+docker build -t ruokalista .
+```
+
+Käännöksen jakaminen kahtia johtuu siitä, että ensinmainittu vaihe kestää kauan
+ja sen ajamisen tarve ei ole niin tiheä kuin jälkimmäisen.
+
+### Docker-levykuvan ajaminen kontissa
+
+```bash
+docker run -p "5000:5000" ruokalista
+```
