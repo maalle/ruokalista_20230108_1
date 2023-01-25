@@ -45,3 +45,9 @@ ja sen ajamisen tarve ei ole niin tiheä kuin jälkimmäisen.
 ```bash
 docker run -p "5000:5000" ruokalista
 ```
+
+#### Docker-Composella
+
+```bash
+docker compose up
+```
