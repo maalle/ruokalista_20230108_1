@@ -25,10 +25,10 @@ rm -rf venv/ ruokalista.db
 
 ## Docker-levykuva
 
-Tee ensin Ubuntuun sopiva Flask-levykuva käskyllä:
+Tee ensin Ubuntuun sopiva Python3-levykuva käskyllä:
 
 ```bash
-docker build -t flask-sqlite3 -f Dockerfile_Flask_SQLite3 .
+docker build -t python3-sqlite3 -f Dockerfile_Python3_SQLite3 .
 ```
 
 Jos tämä on tehty, niin oman levykuvan tästä sovelluksesta voi tehdä käskyllä:

@@ -1,4 +1,4 @@
-FROM flask-sqlite3
+FROM python3-sqlite3
 
 WORKDIR /app
 COPY app.py requirements.txt ./
