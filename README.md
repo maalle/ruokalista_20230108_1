@@ -22,3 +22,32 @@ python3 app.py
 deactivate
 rm -rf venv/ ruokalista.db
 ```
+
+## Docker-levykuva
+
+Tee ensin Ubuntuun sopiva Python3-levykuva käskyllä:
+
+```bash
+docker build -t python3-sqlite3 -f Dockerfile_Python3_SQLite3 .
+```
+
+Jos tämä on tehty, niin oman levykuvan tästä sovelluksesta voi tehdä käskyllä:
+
+```bash
+docker build -t ruokalista .
+```
+
+Käännöksen jakaminen kahtia johtuu siitä, että ensinmainittu vaihe kestää kauan
+ja sen ajamisen tarve ei ole niin tiheä kuin jälkimmäisen.
+
+### Docker-levykuvan ajaminen kontissa
+
+```bash
+docker run -p "5000:5000" ruokalista
+```
+
+#### Docker-Composella
+
+```bash
+docker compose up
+```

@@ -7,7 +7,7 @@ from sqlalchemy.exc import IntegrityError
 
 app = Flask(import_name = 'Ruokalista', static_url_path = '/')
 app.config['JSON_AS_ASCII'] = False
-engine = create_engine("sqlite+pysqlite:///ruokalista.db", echo=True, future=True)
+engine = create_engine(environ.get('DB', "sqlite+pysqlite:///ruokalista.db"), echo=True, future=True)
 with engine.connect() as conn:
     conn.execute(text("CREATE TABLE IF NOT EXISTS RUOKALISTA(id INTEGER PRIMARY KEY, \
     nimi VARCHAR(100) UNIQUE, hinta DECIMAL(5,2))"))
@@ -53,4 +53,4 @@ def poistaRuokalaji(id):
         return {"id": id}
 
 if __name__ == '__main__':
-    app.run(debug = True, port = environ.get('PORT', 5000))
+    app.run(host="0.0.0.0", port = environ.get('PORT', 5000))
