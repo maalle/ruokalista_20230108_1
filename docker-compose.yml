@@ -4,7 +4,7 @@ services:
     ruokalista:
         image: ruokalista
         environment:
-            DB: "sqlite+pysqlite:///db/ruokalista.db"
+            DB: "sqlite+pysqlite:////db/ruokalista.db"
             PORT: "5000"
         ports:
             - "5000:5000"
