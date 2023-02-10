@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 from flask import Flask, render_template, request, abort
-from os import environ
+from os import environ, uname
 from sqlalchemy import create_engine, text
 from sqlalchemy.exc import IntegrityError
 
@@ -15,6 +15,12 @@ with engine.connect() as conn:
 @app.get("/")
 def index():
     return render_template('/index.html')
+
+@app.get("/rs/uname")
+def haeJarjestelma():
+    uname1 = uname()
+    return {'sysname': uname1.sysname, 'nodename': uname1.nodename, 'release': uname1.release,
+        'version': uname1.version, 'machine': uname1.machine}
 
 @app.get("/rs")
 def haeRuokalista():
@@ -53,4 +59,4 @@ def poistaRuokalaji(id):
         return {"id": id}
 
 if __name__ == '__main__':
-    app.run(host="0.0.0.0", port = environ.get('PORT', 5000))
+    app.run(host="0.0.0.0", port = environ.get('PORT', 5000), debug = True)

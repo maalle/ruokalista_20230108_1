@@ -7,4 +7,4 @@ COPY templates/* templates/
 RUN pip3 install -r requirements.txt
 EXPOSE 5000
 VOLUME /db
-CMD ["python3", "app.py"]
+CMD ["-m", "flask", "-A", "app.py", "run", "-h", "0.0.0.0"]

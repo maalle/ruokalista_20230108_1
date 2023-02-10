@@ -46,6 +46,14 @@ ja sen ajamisen tarve ei ole niin tiheä kuin jälkimmäisen.
 docker run -p "5000:5000" ruokalista
 ```
 
+### Docker-levykuvan ja virtuaalilevyaseman poisto
+
+```bash
+docker container rm -f ruokalista
+docker image rm -f ruokalista
+docker volume rm db
+```
+
 #### Docker-Composella
 
 ```bash

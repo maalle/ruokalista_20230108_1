@@ -4,3 +4,4 @@ venv/
 nbproject/
 .project
 .settings/
+__pycache__/
